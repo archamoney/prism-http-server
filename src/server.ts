@@ -38,10 +38,11 @@ function addressInfoToString(addressInfo: AddressInfo | string | null) {
 
 function parseRequestBody(request: IncomingMessage) {
   // if no body provided then return null instead of empty string
-  if (
-    request.headers['content-type'] === undefined &&
-    request.headers['transfer-encoding'] === undefined &&
-    (request.headers['content-length'] === '0' || request.headers['content-length'] === undefined)
+  if (request.headers['content-length'] === '0' || (
+      request.headers['content-type'] === undefined &&
+      request.headers['transfer-encoding'] === undefined &&
+      (request.headers['content-length'] === '0' || request.headers['content-length'] === undefined)
+    )
   ) {
     return Promise.resolve(null);
   }
