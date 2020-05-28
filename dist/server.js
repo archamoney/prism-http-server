@@ -26,9 +26,11 @@ function addressInfoToString(addressInfo) {
     return `http://${addressInfo.address}:${addressInfo.port}`;
 }
 function parseRequestBody(request) {
-    if (request.headers['content-type'] === undefined &&
-        request.headers['transfer-encoding'] === undefined &&
-        (request.headers['content-length'] === '0' || request.headers['content-length'] === undefined)) {
+    if (request.headers['content-length'] === '0' || (
+            request.headers['content-type'] === undefined &&
+            request.headers['transfer-encoding'] === undefined &&
+            (request.headers['content-length'] === '0' || request.headers['content-length'] === undefined))
+        ) {
         return Promise.resolve(null);
     }
     if (typeIs(request, ['application/json', 'application/*+json'])) {
